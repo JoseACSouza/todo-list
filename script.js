@@ -1,3 +1,5 @@
+let getItem;
+let completeds;
 //selecionando as sections
 const input = document.getElementsByTagName('section')[0];
 const output = document.getElementsByTagName('section')[1];
@@ -26,12 +28,62 @@ input.appendChild(button);
 button.addEventListener('click', ()=>{
     const listItem = document.createElement('li');
     listItem.innerHTML = inputItem.value;
+    listItem.style.backgroundColor = 'white';
     list.appendChild(listItem);
-    const selectedItem = document.getElementsByTagName('li');
-    for (let index = 0; index < selectedItem.length; index+=1) {
-        selectedItem[index].addEventListener('click', (target)=>{
-        target.path[0].style.backgroundColor = 'gray';
-    }
-    )}
     inputItem.value = '';
-})
+    attItem();
+    for (let index = 0; index < getItem.length; index+=1) {
+        getItem[index].addEventListener('click', selectItem);
+    }
+    for (let index = 0; index < getItem.length; index+=1) {
+        getItem[index].addEventListener('dblclick', completed);
+    }
+  
+});
+const attItem = ()=>{
+    getItem = document.getElementsByTagName('li');
+}
+
+//seleciona tarefa
+const selectItem = (target)=>{
+    let bgColor = target.target.style.backgroundColor;
+    if(bgColor=='grey'){
+        target.target.style.backgroundColor = 'white';
+    }else if (bgColor == 'white'){
+        for (let index = 0; index < getItem.length; index+=1) {
+            getItem[index].style.backgroundColor='white';
+        }
+        target.target.style.backgroundColor='grey'};
+}
+
+//marca a tarefa como concluída
+const completed = (target)=>{
+    let classLength = target.target.classList.length;
+    if(classLength==1){
+        target.target.classList.remove('completed');
+    }else if (classLength==0){
+        target.target.classList.add('completed');
+}
+completeds = document.getElementsByClassName('completed');
+}
+
+//apaga tudo
+const clearButton = document.createElement('button');
+clearButton.id = 'apaga-tudo';
+clearButton.innerHTML = 'Apagar Tudo';
+input.appendChild(clearButton);
+clearButton.addEventListener('click',()=>{
+    location.reload();
+});
+
+//apaga os completos
+const clearCompleted = document.createElement('button');
+clearCompleted.id = 'remover-finalizados';
+clearCompleted.innerHTML = 'Remover Finalizados';
+input.appendChild(clearCompleted);
+clearCompleted.addEventListener('click',()=>{
+    completeds = document.getElementsByClassName('completed');
+    for (let index = 0; index <= completeds.length+1; index+=1) {
+        completeds[0].remove();
+    }
+});

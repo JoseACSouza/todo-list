@@ -142,3 +142,39 @@ for (let index = 0; index < savedText.length; index+=1) {
     }
 }
 }
+
+//botão de mover item selecionado
+const moveUp = document.createElement('button');
+moveUp.id = 'mover-cima';
+moveUp.innerHTML = '^';
+input.appendChild(moveUp);
+moveUp.addEventListener('click',()=>{
+    infoList();
+    for (let index = 0; index < getItem.length; index+=1) {   
+        if (bgList[index] == 'grey') {
+            //texto
+            let holdText = getItem[index].innerHTML;
+            getItem[index].innerHTML = getItem[index-1].innerHTML;
+            getItem[index-1].innerHTML = holdText;
+            //style
+            let holdStyle = getItem[index].style.backgroundColor;
+            getItem[index].style.backgroundColor = getItem[index-1].style.backgroundColor;
+            getItem[index-1].style.backgroundColor = holdStyle; 
+            //class
+            let holdClass = getItem[index].classList;
+            getItem[index].classList = getItem[index-1].classList;
+            getItem[index-1].classList = holdClass;  
+        }else{holdClass = '';
+        holdText = '';
+        holdStyle = '';}
+            }
+            infoList();
+});
+
+
+
+
+const moveDown = document.createElement('button');
+moveDown.id = 'mover-baixo';
+moveDown.innerHTML = 'v';
+input.appendChild(moveDown);

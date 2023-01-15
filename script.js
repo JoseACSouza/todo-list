@@ -1,5 +1,8 @@
 let getItem;
 let completeds;
+let textList = [];
+let bgList = [];
+let classItem = [];
 //selecionando as sections
 const input = document.getElementsByTagName('section')[0];
 const output = document.getElementsByTagName('section')[1];
@@ -73,7 +76,10 @@ clearButton.id = 'apaga-tudo';
 clearButton.innerHTML = 'Apagar Tudo';
 input.appendChild(clearButton);
 clearButton.addEventListener('click',()=>{
-    location.reload();
+    attItem();
+    for (let index = 0; index <= getItem.length+10; index+=1) {
+        getItem[0].remove();
+    }
 });
 
 //apaga os completos
@@ -87,3 +93,52 @@ clearCompleted.addEventListener('click',()=>{
         completeds[0].remove();
     }
 });
+
+//informações importantes da lista;
+const infoList = ()=>{
+    for (let index = 0; index < getItem.length; index+=1) {
+        textList.push(getItem[index].innerHTML);
+        bgList.push(getItem[index].style.backgroundColor);
+        classItem.push(getItem[index].classList[0]);
+    }
+}
+
+
+
+
+//botão de salvar a lista
+const saveList = document.createElement('button');
+saveList.id = 'salvar-tarefas';
+saveList.innerHTML = 'Salvar Lista';
+input.appendChild(saveList);
+saveList.addEventListener('click',()=>{
+    attItem();
+    infoList();
+    localStorage.setItem('textList', JSON.stringify(textList));
+    localStorage.setItem('styleList', JSON.stringify(bgList));
+    localStorage.setItem('classList', JSON.stringify(classItem));
+});
+
+//carregar lista ao recarregar a página
+
+const savedText = JSON.parse(localStorage.getItem('textList'));
+const savedStyle = JSON.parse(localStorage.getItem('styleList'));
+const savedClass = JSON.parse(localStorage.getItem('classList'));
+if(savedText){
+for (let index = 0; index < savedText.length; index+=1) {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = savedText[index];
+    listItem.style.background = savedStyle[index];
+    if (savedClass[index] != 'null') {
+        listItem.className = savedClass[index];
+    }
+    list.appendChild(listItem);
+    attItem();
+    for (let index = 0; index < getItem.length; index+=1) {
+        getItem[index].addEventListener('click', selectItem);
+    }
+    for (let index = 0; index < getItem.length; index+=1) {
+        getItem[index].addEventListener('dblclick', completed);
+    }
+}
+}

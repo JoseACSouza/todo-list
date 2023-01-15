@@ -143,12 +143,14 @@ for (let index = 0; index < savedText.length; index+=1) {
 }
 }
 
+
 //botão de mover item selecionado
 const moveUp = document.createElement('button');
 moveUp.id = 'mover-cima';
 moveUp.innerHTML = '^';
 input.appendChild(moveUp);
 moveUp.addEventListener('click',()=>{
+    attItem();
     infoList();
     for (let index = 0; index < getItem.length; index+=1) {   
         if (bgList[index] == 'grey') {
@@ -164,17 +166,27 @@ moveUp.addEventListener('click',()=>{
             let holdClass = getItem[index].classList;
             getItem[index].classList = getItem[index-1].classList;
             getItem[index-1].classList = holdClass;  
-        }else{holdClass = '';
-        holdText = '';
-        holdStyle = '';}
-            }
-            infoList();
+        }
+        }
 });
-
-
 
 
 const moveDown = document.createElement('button');
 moveDown.id = 'mover-baixo';
 moveDown.innerHTML = 'v';
 input.appendChild(moveDown);
+
+//botão que remove o selecionado
+const selectedRemove = document.createElement('button');
+selectedRemove.id = 'remover-selecionado';
+selectedRemove.innerHTML = 'Remover Selecionado';
+input.appendChild(selectedRemove);
+selectedRemove.addEventListener('click',()=>{
+    attItem();
+    infoList();
+    for (let index = 0; index < getItem.length; index+=1) {  
+        if (bgList[index] == 'grey') {
+            getItem[index].remove();
+        }
+        }
+});

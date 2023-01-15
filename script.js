@@ -77,7 +77,7 @@ clearButton.innerHTML = 'Apagar Tudo';
 input.appendChild(clearButton);
 clearButton.addEventListener('click',()=>{
     attItem();
-    for (let index = 0; index <= getItem.length+10; index+=1) {
+    for (let index = 0; index <= getItem.length+1; index+=1) {
         getItem[0].remove();
     }
 });
